@@ -246,19 +246,21 @@ else ()
 endif ()
 
 if (UNIX)
-    set(PHYSFS_TARBALL "${CMAKE_CURRENT_SOURCE_DIR}/../physfs-${PHYSFS_VERSION}.tar.bz2")
-    add_custom_target(
-            dist
-            hg archive -t tbz2 "${PHYSFS_TARBALL}"
-            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-            COMMENT "Building source tarball '${PHYSFS_TARBALL}'..."
-    )
-    add_custom_target(
-            uninstall
-            "${CMAKE_CURRENT_SOURCE_DIR}/extras/uninstall.sh"
-            WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-            COMMENT "Uninstall the project..."
-    )
+    if (PHYSFS_INSTALL)
+        set(PHYSFS_TARBALL "${CMAKE_CURRENT_SOURCE_DIR}/../physfs-${PHYSFS_VERSION}.tar.bz2")
+        add_custom_target(
+                dist
+                hg archive -t tbz2 "${PHYSFS_TARBALL}"
+                WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+                COMMENT "Building source tarball '${PHYSFS_TARBALL}'..."
+        )
+        add_custom_target(
+                uninstall
+                "${CMAKE_CURRENT_SOURCE_DIR}/extras/uninstall.sh"
+                WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+                COMMENT "Uninstall the project..."
+        )
+    endif (PHYSFS_INSTALL)
 endif ()
 
 if (NOT MSVC)
